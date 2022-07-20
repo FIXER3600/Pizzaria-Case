@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import cors from 'cors'
 import {AddressInfo} from "net";
 import { itemRouter } from "./routes/itemRouter";
 import { orderRoute } from "./routes/orderRouter";
@@ -7,7 +8,7 @@ import { pizzaRouter } from "./routes/pizzaRouter";
 import { userRouter } from "./routes/userRouter";
 dotenv.config();
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 
 app.use("/item",itemRouter)
