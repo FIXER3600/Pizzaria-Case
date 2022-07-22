@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PizzaDatabase = void 0;
-const Pizza_1 = require("../../model/Pizza");
 const BaseDatabase_1 = require("../BaseDatabase");
 class PizzaDatabase extends BaseDatabase_1.BaseDatabase {
     create(pizza) {
@@ -21,7 +20,7 @@ class PizzaDatabase extends BaseDatabase_1.BaseDatabase {
                     id: pizza.id,
                     name: pizza.name,
                     price: pizza.price,
-                    img_url: pizza.imgUrl,
+                    img_url: pizza.img_url,
                     ingredients: pizza.ingredients
                 }).into(PizzaDatabase.TABLE_NAME);
             }
@@ -61,10 +60,10 @@ class PizzaDatabase extends BaseDatabase_1.BaseDatabase {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield this.getConnection()
-                    .select('*')
+                    .select("*")
                     .from(PizzaDatabase.TABLE_NAME)
                     .where({ id });
-                return Pizza_1.Pizza.toPizzaModel(result[0]);
+                return result[0];
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);

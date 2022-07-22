@@ -24,11 +24,11 @@ class PizzaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const auth = req.headers.authorization;
-                const { name, price, imgUrl, ingredients } = req.body;
+                const { name, price, img_url, ingredients } = req.body;
                 const input = {
                     name,
                     price,
-                    imgUrl,
+                    img_url,
                     ingredients
                 };
                 const pizzaBusiness = new PizzaBusiness_1.PizzaBusiness(pizzaDatabase, userDatabase, authenticator, idGenerator);

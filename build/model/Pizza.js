@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pizza = void 0;
 class Pizza {
-    constructor(id, name, price, imgUrl, ingredients) {
+    constructor(id, name, price, img_url, ingredients) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imgUrl = imgUrl;
+        this.img_url = img_url;
         this.ingredients = ingredients;
     }
     getId() {
@@ -19,7 +19,7 @@ class Pizza {
         return this.price;
     }
     getImgUrl() {
-        return this.imgUrl;
+        return this.img_url;
     }
     getIngredients() {
         return this.ingredients;
@@ -33,14 +33,14 @@ class Pizza {
     setPrice(price) {
         this.price = price;
     }
-    setImgUrl(imgUrl) {
-        this.imgUrl = imgUrl;
+    setImgUrl(img_url) {
+        this.img_url = img_url;
     }
     setIngredients(ingredients) {
         this.ingredients = ingredients;
     }
     static toPizzaModel(pizza) {
-        return new Pizza(pizza.id, pizza.name, pizza.price, pizza.imgUrl, pizza.ingredients);
+        return new Pizza(pizza.id, pizza.name, pizza.price, pizza.img_url, pizza.ingredients);
     }
 }
 exports.Pizza = Pizza;

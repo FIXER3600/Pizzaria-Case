@@ -25,8 +25,8 @@ class PizzaBusiness {
                 if (!token) {
                     throw new CustomError_2.CustomError(401, "Por favor, passe o token no header da requisição");
                 }
-                const { name, price, imgUrl, ingredients } = input;
-                if (!name || !price || !ingredients || !imgUrl) {
+                const { name, price, img_url, ingredients } = input;
+                if (!name || !price || !ingredients || !img_url) {
                     throw new CustomError_2.CustomError(422, "Faltam parâmetros na requisição que devem ser completados para a criação da Pizza");
                 }
                 const pizzaByName = yield this.pizzaDatabase.getByName(name);
@@ -45,7 +45,7 @@ class PizzaBusiness {
                     id,
                     name,
                     price,
-                    imgUrl,
+                    img_url,
                     ingredients
                 };
                 yield this.pizzaDatabase.create(pizza);
