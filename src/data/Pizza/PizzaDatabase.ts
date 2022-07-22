@@ -11,7 +11,7 @@ export class PizzaDatabase extends BaseDatabase implements IPizzaDatabase {
 				id:pizza.id,
 				name:pizza.name,
 				price:pizza.price,
-				img_url:pizza.imgUrl,
+				img_url:pizza.img_url,
 				ingredients:pizza.ingredients
 			}).into(PizzaDatabase.TABLE_NAME)
 	}catch (error: any) {
@@ -42,10 +42,10 @@ export class PizzaDatabase extends BaseDatabase implements IPizzaDatabase {
 	async getById(id: string): Promise<Pizza> {
 	    try {
 		const result=await this.getConnection()
-		.select('*')
+		.select("*")
 		.from(PizzaDatabase.TABLE_NAME)
 		.where({id})
-		return Pizza.toPizzaModel(result[0])
+		return result[0]
 	    } catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
 	      }
