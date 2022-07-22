@@ -64,4 +64,16 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		throw new Error(error.sqlMessage || error.message)
 	    }
 	}
+	async getActives(): Promise<Item[] | []> {
+	    try {
+		const result =await this.getConnection()
+		.from(ItemDatabase.TABLE_NAME)
+		.join('Pizza_Case','Pizza_Case.id','=','Item.pizza_id')
+		.where('status','ACTIVE')
+		.select('*')
+		return result[0]
+	    } catch(error:any){
+		throw new Error(error.sqlMessage || error.message)
+	    }
+	}
 }

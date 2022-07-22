@@ -2,7 +2,7 @@ import { ItemDatabase } from "../../data/Item/ItemDatabase";
 import { OrderDatabase } from "../../data/Order/OrderDatabase";
 import { PizzaDatabase } from "../../data/Pizza/PizzaDatabase";
 import { CustomError } from "../../error/CustomError";
-import { item, ItemInputDTO } from "../../model/Item";
+import { Item, item, ItemInputDTO } from "../../model/Item";
 import { IdGenerator } from "../../services/IdGenerator";
 import { ItemRepository } from "./ItemRepository";
 
@@ -53,6 +53,21 @@ export class ItemBusiness implements ItemRepository{
 		}
 		await this.itemDatabase.deleteItem(itemId)
 	    } catch (error: any) {
+		throw new Error(error.sqlMessage || error.message)
+	      }
+	}
+	async getActives(token: string): Promise<Item[] | []> {
+	    try {
+		if (!token) {
+			throw new CustomError(401,"Por favor, passe o token no header da requisição");
+		}
+		const itens=this.itemDatabase.getActives()
+		if (!itens) {
+			throw new CustomError(404,"Carrinho vazio");
+		}
+		
+		return itens
+	    }catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
 	      }
 	}

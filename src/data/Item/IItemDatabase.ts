@@ -6,4 +6,5 @@ export interface IItemDatabase{
 	getPizzaIdByItem(itemId:string):Promise<string>
 	deleteItem(itemId:string):Promise<void>
 	getById(itemId:string):Promise<Item>
+	getActives():Promise<Item[] | []>
 }
