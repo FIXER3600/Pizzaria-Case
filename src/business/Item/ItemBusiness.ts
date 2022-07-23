@@ -26,34 +26,21 @@ export class ItemBusiness implements ItemRepository{
 		if (!pizza) {
 			throw new CustomError(404,"Id da pizza inválido ou Pizza não encontrada");
 		}
-		const itemActive:Item= await this.itemDatabase.getActives()
-		if(!itemActive.getId()){
+		const idActive= await this.itemDatabase.getIdActive()
+		const order_id=this.idGenerator.generate()
+		const status=Status.ACTIVE
 			
-			const id= itemActive.getId()
-			const order_id=this.idGenerator.generate()
-			const status=Status.ACTIVE
-			const item:item={
-				id,
-				pizzaId,
-				status,
-				order_id,
-				quantity
-			}
-			await this.itemDatabase.create(item)
-		}else{
-			const id= this.idGenerator.generate()
-			const order_id=this.idGenerator.generate()
-			const status=Status.ACTIVE
-			const item:item={
-				id,
-				pizzaId,
-				status,
-				order_id,
-				quantity
-			}
-			await this.itemDatabase.create(item)
-		}
 		
+		const id=this.idGenerator.generate()
+		const item:item={
+			id,
+			pizzaId,
+			status,
+			order_id,
+			quantity
+		}
+			
+		await this.itemDatabase.create(item)
 		
 	    } catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)

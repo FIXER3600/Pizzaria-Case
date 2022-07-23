@@ -45,6 +45,8 @@ export class PizzaDatabase extends BaseDatabase implements IPizzaDatabase {
 		.select("*")
 		.from(PizzaDatabase.TABLE_NAME)
 		.where({id})
+		
+		
 		return result[0]
 	    } catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)

@@ -1,7 +1,6 @@
 import { order } from './../../model/Order';
 import { OrderDatabase } from "../../data/Order/OrderDatabase";
 import { PizzaDatabase } from "../../data/Pizza/PizzaDatabase";
-import { UserDatabase } from "../../data/User/UserDatabase";
 import { CustomError } from "../../error/CustomError";
 import { Order, OrderInputDTO } from "../../model/Order";
 import { Authenticator } from "../../services/Authenticator";
@@ -15,7 +14,6 @@ export class OrderBusiness implements OrderRepository{
 		private pizzaDatabase:PizzaDatabase,
 		private itemDatabase: ItemDatabase,
 		private authenticator: Authenticator,
-		private idGenerator: IdGenerator
 	      ) {}
 
 	async create(input: OrderInputDTO,token:string): Promise<void> {
@@ -33,9 +31,13 @@ export class OrderBusiness implements OrderRepository{
 			const price= await this.pizzaDatabase.getPriceByItem(pizzaId)	
 			const quantity=await this.itemDatabase.getQuantity(itemId)
 			const id=await this.itemDatabase.getOrderId()
+			
+			const{order_id}=id
+			
+			
 			const createdAt=new Date()
 			const order:order={
-				id,
+				id:order_id,
 				userId:userId.id,
 				itemId,
 				total:Number(price) * Number(quantity),

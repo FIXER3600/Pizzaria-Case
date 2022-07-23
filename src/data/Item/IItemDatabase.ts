@@ -8,4 +8,5 @@ export interface IItemDatabase{
 	getById(itemId:string):Promise<Item>
 	getActives():Promise<Item>
 	getOrderId():Promise<string>
+	getIdActive():Promise<string>
 }

@@ -37,17 +37,17 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAt
 Content-Type: application/json
 
 {
-	"pizzaId":"95f57823-1fb8-48e8-aa8c-339a2d5a26aa",
+	"pizzaId":"ba6a43ac-5938-4d62-94e8-30fe35005d1e",
 	"quantity":2
 }
 
 ###
 POST http://localhost:3003/order/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODAyNzU5MSwiZXhwIjoxNjU4MDMxMTkxfQ.UEp-Wbvu6NNJ045Eup5dKKNvmeX0-SAjXmxZIAa8Rn4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODYxMjI3NSwiZXhwIjoxNjU4NjE1ODc1fQ.3YOYWfWRsINbX9e_1fFt4VY6uJVXwX-jN9cjUBPvIzQ
 Content-Type: application/json
 
 {
-	"itemId":"8a561f6f-abc6-4df9-b9fb-ad397c124d0e"
+	"itemId":"0d92c0a6-76ca-493d-ac2c-dc597796185f"
 	
 }
 

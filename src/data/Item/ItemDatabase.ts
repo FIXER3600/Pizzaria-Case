@@ -6,10 +6,15 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 	private static TABLE_NAME = 'Item'
 	async create(item: item): Promise<void> {
 	    try {
+		console.log(item.status);
+		
+		
 		await this.getConnection()
 		.insert({
 			id:item.id,
 			pizza_id:item.pizzaId,
+			order_id:item.order_id,
+			status:item.status,
 			quantity:item.quantity
 		}).into(ItemDatabase.TABLE_NAME)
 	    } catch (error: any) {
@@ -76,13 +81,26 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		throw new Error(error.sqlMessage || error.message)
 	    }
 	}
-	async getOrderId(): Promise<string> {
+	async getOrderId(): Promise<any> {
 	    try {
 		const result=await this.getConnection()
 		.select('order_id')
 		.from(ItemDatabase.TABLE_NAME)
 		.where("status","ACTIVE")
 
+		return result[0]
+	    } catch(error:any){
+		throw new Error(error.sqlMessage || error.message)
+	    }
+	}
+	async getIdActive(): Promise<any> {
+	    try {
+		const result=await this.getConnection()
+		.select('id')
+		.from(ItemDatabase.TABLE_NAME)
+		.where("status",'INACTIVE')
+		
+		
 		return result
 	    } catch(error:any){
 		throw new Error(error.sqlMessage || error.message)
