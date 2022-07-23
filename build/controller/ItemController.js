@@ -50,5 +50,18 @@ class ItemController {
             }
         });
     }
+    getActives(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const auth = req.headers.authorization;
+                const itemBusiness = new ItemBusiness_1.ItemBusiness(pizzaDatabase, itemDatabase, idGenerator);
+                const result = yield itemBusiness.getActives(auth);
+                res.status(200).send(result);
+            }
+            catch (error) {
+                res.status(400).send({ error: error.message });
+            }
+        });
+    }
 }
 exports.ItemController = ItemController;

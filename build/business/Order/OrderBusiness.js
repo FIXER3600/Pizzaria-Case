@@ -12,12 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderBusiness = void 0;
 const CustomError_1 = require("../../error/CustomError");
 class OrderBusiness {
-    constructor(orderDatabase, pizzaDatabase, itemDatabase, authenticator, idGenerator) {
+    constructor(orderDatabase, pizzaDatabase, itemDatabase, authenticator) {
         this.orderDatabase = orderDatabase;
         this.pizzaDatabase = pizzaDatabase;
         this.itemDatabase = itemDatabase;
         this.authenticator = authenticator;
-        this.idGenerator = idGenerator;
     }
     create(input, token) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -33,10 +32,11 @@ class OrderBusiness {
                 const pizzaId = yield this.itemDatabase.getPizzaIdByItem(itemId);
                 const price = yield this.pizzaDatabase.getPriceByItem(pizzaId);
                 const quantity = yield this.itemDatabase.getQuantity(itemId);
-                const id = this.idGenerator.generate();
+                const id = yield this.itemDatabase.getOrderId();
+                const { order_id } = id;
                 const createdAt = new Date();
                 const order = {
-                    id,
+                    id: order_id,
                     userId: userId.id,
                     itemId,
                     total: Number(price) * Number(quantity),

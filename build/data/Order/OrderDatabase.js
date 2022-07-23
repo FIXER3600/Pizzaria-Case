@@ -23,6 +23,10 @@ class OrderDatabase extends BaseDatabase_1.BaseDatabase {
                     createdAt: order.createdAt,
                     item_id: order.itemId
                 }).into(OrderDatabase.TABLE_NAME);
+                yield this.getConnection()
+                    .from('Item')
+                    .where('id', order.itemId)
+                    .update('status', 'INACTIVE');
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);

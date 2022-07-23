@@ -16,10 +16,13 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
     create(item) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(item.status);
                 yield this.getConnection()
                     .insert({
                     id: item.id,
                     pizza_id: item.pizzaId,
+                    order_id: item.order_id,
+                    status: item.status,
                     quantity: item.quantity
                 }).into(ItemDatabase.TABLE_NAME);
             }
@@ -79,6 +82,49 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
                     .from(ItemDatabase.TABLE_NAME)
                     .where('id', itemId);
                 return Item_1.Item.toItemModel(result[0]);
+            }
+            catch (error) {
+                throw new Error(error.sqlMessage || error.message);
+            }
+        });
+    }
+    getActives() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .from(ItemDatabase.TABLE_NAME)
+                    .join('Pizza_Case', 'Pizza_Case.id', '=', 'Item.pizza_id')
+                    .where('status', 'ACTIVE')
+                    .select('*');
+                return result[0];
+            }
+            catch (error) {
+                throw new Error(error.sqlMessage || error.message);
+            }
+        });
+    }
+    getOrderId() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .select('order_id')
+                    .from(ItemDatabase.TABLE_NAME)
+                    .where("status", "ACTIVE");
+                return result[0];
+            }
+            catch (error) {
+                throw new Error(error.sqlMessage || error.message);
+            }
+        });
+    }
+    getIdActive() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .select('id')
+                    .from(ItemDatabase.TABLE_NAME)
+                    .where("status", 'INACTIVE');
+                return result;
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);

@@ -4,7 +4,6 @@ import { PizzaDatabase } from "../../data/Pizza/PizzaDatabase";
 import { CustomError } from "../../error/CustomError";
 import { Order, OrderInputDTO } from "../../model/Order";
 import { Authenticator } from "../../services/Authenticator";
-import { IdGenerator } from "../../services/IdGenerator";
 import { OrderRepository } from "./OrderRepository";
 import { ItemDatabase } from '../../data/Item/ItemDatabase';
 

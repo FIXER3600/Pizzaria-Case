@@ -26,11 +26,11 @@ class OrderController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const auth = req.headers.authorization;
-                const { userId, itemId } = req.body;
+                const { itemId } = req.body;
                 const input = {
                     itemId
                 };
-                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator, idGenerator);
+                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator);
                 yield orderBusiness.create(input, auth);
                 res.status(200).send("Compra efetuada!");
             }
@@ -44,7 +44,7 @@ class OrderController {
             try {
                 const auth = req.headers.authorization;
                 const id = req.params.id;
-                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator, idGenerator);
+                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator);
                 const result = yield orderBusiness.getById(id, auth);
                 res.status(200).send(result);
             }
@@ -57,7 +57,7 @@ class OrderController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const auth = req.headers.authorization;
-                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator, idGenerator);
+                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator);
                 const result = yield orderBusiness.getAll(auth);
                 res.status(200).send(result);
             }

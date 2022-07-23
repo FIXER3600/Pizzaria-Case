@@ -15,11 +15,11 @@ export class OrderController{
 	async create(req:Request,res:Response){
 		try {
 			const auth=req.headers.authorization!
-			const {userId,itemId}=req.body
+			const {itemId}=req.body
 			const input:OrderInputDTO={
 				itemId
 			}
-			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator,idGenerator)
+			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator)
 			await orderBusiness.create(input,auth)
 			res.status(200).send("Compra efetuada!")
 		}  catch (error:any) {
@@ -30,7 +30,7 @@ export class OrderController{
 		try {
 			const auth=req.headers.authorization!
 			const id=req.params.id
-			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator,idGenerator)
+			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator)
 			const result=await orderBusiness.getById(id,auth)
 			res.status(200).send(result)
 
@@ -41,7 +41,7 @@ export class OrderController{
 	async getAll(req:Request,res:Response){
 		try {
 			const auth=req.headers.authorization!
-			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator,idGenerator)
+			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator)
 			const result=await orderBusiness.getAll(auth)
 			res.status(200).send(result)
 		} catch (error:any) {
