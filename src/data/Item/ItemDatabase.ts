@@ -64,7 +64,7 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		throw new Error(error.sqlMessage || error.message)
 	    }
 	}
-	async getActives(): Promise<Item[] | []> {
+	async getActives(): Promise<Item> {
 	    try {
 		const result =await this.getConnection()
 		.from(ItemDatabase.TABLE_NAME)
@@ -72,6 +72,18 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		.where('status','ACTIVE')
 		.select('*')
 		return result[0]
+	    } catch(error:any){
+		throw new Error(error.sqlMessage || error.message)
+	    }
+	}
+	async getOrderId(): Promise<string> {
+	    try {
+		const result=await this.getConnection()
+		.select('order_id')
+		.from(ItemDatabase.TABLE_NAME)
+		.where("status","ACTIVE")
+
+		return result
 	    } catch(error:any){
 		throw new Error(error.sqlMessage || error.message)
 	    }

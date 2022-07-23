@@ -32,7 +32,7 @@ export class OrderBusiness implements OrderRepository{
 			const pizzaId= await this.itemDatabase.getPizzaIdByItem(itemId)
 			const price= await this.pizzaDatabase.getPriceByItem(pizzaId)	
 			const quantity=await this.itemDatabase.getQuantity(itemId)
-			const id=this.idGenerator.generate()
+			const id=await this.itemDatabase.getOrderId()
 			const createdAt=new Date()
 			const order:order={
 				id,
@@ -41,6 +41,7 @@ export class OrderBusiness implements OrderRepository{
 				total:Number(price) * Number(quantity),
 				createdAt
 			}
+			
 			await this.orderDatabase.create(order)
 		}catch (error: any) {
 			throw new Error(error.sqlMessage || error.message)

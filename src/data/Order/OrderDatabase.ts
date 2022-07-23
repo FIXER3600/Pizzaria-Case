@@ -14,6 +14,10 @@ export class OrderDatabase extends BaseDatabase implements IOrderDatabase{
 			createdAt:order.createdAt,
 			item_id:order.itemId
 		}).into(OrderDatabase.TABLE_NAME)
+		await this.getConnection()
+		.from('Item')
+		.where('id',order.itemId)
+		.update('status','INACTIVE')
 	} catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
 	      }	

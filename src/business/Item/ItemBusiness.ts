@@ -2,7 +2,7 @@ import { ItemDatabase } from "../../data/Item/ItemDatabase";
 import { OrderDatabase } from "../../data/Order/OrderDatabase";
 import { PizzaDatabase } from "../../data/Pizza/PizzaDatabase";
 import { CustomError } from "../../error/CustomError";
-import { Item, item, ItemInputDTO } from "../../model/Item";
+import { Item, item, ItemInputDTO, Status } from "../../model/Item";
 import { IdGenerator } from "../../services/IdGenerator";
 import { ItemRepository } from "./ItemRepository";
 
@@ -26,15 +26,35 @@ export class ItemBusiness implements ItemRepository{
 		if (!pizza) {
 			throw new CustomError(404,"Id da pizza inválido ou Pizza não encontrada");
 		}
-		const id= this.idGenerator.generate()
-
-		const item:item={
-			id,
-			pizzaId,
-			quantity
+		const itemActive:Item= await this.itemDatabase.getActives()
+		if(!itemActive.getId()){
+			
+			const id= itemActive.getId()
+			const order_id=this.idGenerator.generate()
+			const status=Status.ACTIVE
+			const item:item={
+				id,
+				pizzaId,
+				status,
+				order_id,
+				quantity
+			}
+			await this.itemDatabase.create(item)
+		}else{
+			const id= this.idGenerator.generate()
+			const order_id=this.idGenerator.generate()
+			const status=Status.ACTIVE
+			const item:item={
+				id,
+				pizzaId,
+				status,
+				order_id,
+				quantity
+			}
+			await this.itemDatabase.create(item)
 		}
-
-		await this.itemDatabase.create(item)
+		
+		
 	    } catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
 	      }
@@ -56,7 +76,7 @@ export class ItemBusiness implements ItemRepository{
 		throw new Error(error.sqlMessage || error.message)
 	      }
 	}
-	async getActives(token: string): Promise<Item[] | []> {
+	async getActives(token: string): Promise<Item> {
 	    try {
 		if (!token) {
 			throw new CustomError(401,"Por favor, passe o token no header da requisição");
@@ -65,7 +85,7 @@ export class ItemBusiness implements ItemRepository{
 		if (!itens) {
 			throw new CustomError(404,"Carrinho vazio");
 		}
-		
+
 		return itens
 	    }catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
