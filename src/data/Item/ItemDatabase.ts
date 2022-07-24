@@ -75,7 +75,7 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		.from(ItemDatabase.TABLE_NAME)
 		.join('Pizza_Case','Pizza_Case.id','=','Item.pizza_id')
 		.where('status','ACTIVE')
-		.select('*')
+		.select('Item.id','Pizza_Case.name',"Pizza_Case.price","Pizza_Case.ingredients",'Item.quantity','Pizza_Case.img_url')
 		return result[0]
 	    } catch(error:any){
 		throw new Error(error.sqlMessage || error.message)

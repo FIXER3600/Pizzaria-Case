@@ -95,7 +95,7 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
                     .from(ItemDatabase.TABLE_NAME)
                     .join('Pizza_Case', 'Pizza_Case.id', '=', 'Item.pizza_id')
                     .where('status', 'ACTIVE')
-                    .select('*');
+                    .select('Item.id', 'Pizza_Case.name', "Pizza_Case.price", "Pizza_Case.ingredients", 'Pizza_Case.quantity', 'Pizza_Case.img_url');
                 return result[0];
             }
             catch (error) {
