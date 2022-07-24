@@ -1,3 +1,4 @@
+import { raw } from "express";
 import { Item, item } from "../../model/Item";
 import { BaseDatabase } from "../BaseDatabase";
 import { IItemDatabase } from "./IItemDatabase";
@@ -69,13 +70,10 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		throw new Error(error.sqlMessage || error.message)
 	    }
 	}
-	async getActives(): Promise<Item> {
+	async getActives(): Promise<any> {
 	    try {
 		const result =await this.getConnection()
-		.from(ItemDatabase.TABLE_NAME)
-		.join('Pizza_Case','Pizza_Case.id','=','Item.pizza_id')
-		.where('status','ACTIVE')
-		.select('Item.id','Pizza_Case.name',"Pizza_Case.price","Pizza_Case.ingredients",'Item.quantity','Pizza_Case.img_url')
+		.raw(`SELECT i.id,p.name,p.price,p.img_url,p.ingredients,i.quantity FROM Pizza_Case as p INNER JOIN Item i ON i.pizza_id=p.id WHERE i.status='ACTIVE'`)
 		return result[0]
 	    } catch(error:any){
 		throw new Error(error.sqlMessage || error.message)
