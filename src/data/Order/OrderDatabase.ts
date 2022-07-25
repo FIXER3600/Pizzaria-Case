@@ -71,7 +71,7 @@ export class OrderDatabase extends BaseDatabase implements IOrderDatabase{
 		
 		
 		const result=await this.getConnection()
-		.raw(`SELECT o.total,o.createdAt,i.quantity,u.name,p.price,p.img_url,p.ingredients 
+		.raw(`SELECT o.total,o.createdAt,i.quantity,u.name,p.price,p.img_url,p.name as pizza,p.ingredients 
 		FROM Order_CASE_PIZZA o INNER JOIN Item i on o.id=i.order_id 
 		INNER JOIN Pizza_Case p ON p.id=i.pizza_id 
 		INNER JOIN User_CASE_PIZZA u ON u.id=o.user_id
