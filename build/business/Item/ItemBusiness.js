@@ -34,14 +34,9 @@ class ItemBusiness {
                 }
                 const status = Item_1.Status.ACTIVE;
                 const id = this.idGenerator.generate();
-                if (pizza) {
-                    const quantityBase = yield this.itemDatabase.getQuantity(id);
-                    quantity += quantityBase;
-                }
                 let order_id = yield this.itemDatabase.getOrderId();
                 if (!order_id) {
                     order_id = this.idGenerator.generate();
-                    return order_id;
                 }
                 const item = {
                     id,

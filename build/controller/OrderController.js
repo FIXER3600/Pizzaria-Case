@@ -66,5 +66,19 @@ class OrderController {
             }
         });
     }
+    getOrderDetails(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const auth = req.headers.authorization;
+                const { id } = req.params;
+                const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator);
+                const result = yield orderBusiness.getDetails(id, auth);
+                res.status(200).send(result);
+            }
+            catch (error) {
+                res.status(400).send({ error: error.message });
+            }
+        });
+    }
 }
 exports.OrderController = OrderController;

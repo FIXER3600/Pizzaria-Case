@@ -78,7 +78,6 @@ class PizzaDatabase extends BaseDatabase_1.BaseDatabase {
                     .join('Item', "Pizza_Case.id", "=", 'Item.pizza_id')
                     .select('price');
                 const { price } = result[0];
-                console.log(price);
                 return price;
             }
             catch (error) {

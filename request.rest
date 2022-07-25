@@ -57,7 +57,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAt
 
 ###
 GET http://localhost:3003/order/all
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODAxNzU4MywiZXhwIjoxNjU4MDIxMTgzfQ.KxcmjGrb_Ey-pcct5B8wXX-HNCyvmocOKXB-7WRkWDo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODcyNTA5MCwiZXhwIjoxNjU4NzI4NjkwfQ.GvmNcUeauoEbipcC1psA7p877cjkVL_UrtSK2y93lb8
 
 ###
 GET http://localhost:3003/pizza/95f57823-1fb8-48e8-aa8c-339a2d5a26aa

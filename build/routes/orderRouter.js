@@ -10,4 +10,5 @@ exports.orderRoute = express_1.default.Router();
 const orderController = new OrderController_1.OrderController();
 exports.orderRoute.get('/all', orderController.getAll);
 exports.orderRoute.get('/:id', orderController.getById);
+exports.orderRoute.get('/details/:id', orderController.getOrderDetails);
 exports.orderRoute.post("/create", orderController.create);

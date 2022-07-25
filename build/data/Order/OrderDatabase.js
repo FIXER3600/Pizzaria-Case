@@ -67,9 +67,24 @@ class OrderDatabase extends BaseDatabase_1.BaseDatabase {
                     .from("Item")
                     .where("Item.order_id", `${orderId}`);
                 const { id } = result[0];
-                console.log(result[0]);
-                console.log(id);
                 return id;
+            }
+            catch (error) {
+                throw new Error(error.sqlMessage || error.message);
+            }
+        });
+    }
+    getDetails(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .raw(`SELECT o.total,o.createdAt,i.quantity,u.name,p.price,p.img_url,p.ingredients 
+		FROM Order_CASE_PIZZA o INNER JOIN Item i on o.id=i.order_id 
+		INNER JOIN Pizza_Case p ON p.id=i.pizza_id 
+		INNER JOIN User_CASE_PIZZA u ON u.id=o.user_id
+		WHERE o.id='${id}';
+		`);
+                return result[0];
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);

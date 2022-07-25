@@ -84,5 +84,22 @@ class OrderBusiness {
             }
         });
     }
+    getDetails(id, token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!token) {
+                    throw new CustomError_1.CustomError(401, "Por favor, passe o token no header da requisição");
+                }
+                const details = yield this.orderDatabase.getDetails(id);
+                if (!details) {
+                    throw new CustomError_1.CustomError(404, "Detalhes não encontrados");
+                }
+                return details;
+            }
+            catch (error) {
+                throw new Error(error.sqlMessage || error.message);
+            }
+        });
+    }
 }
 exports.OrderBusiness = OrderBusiness;
