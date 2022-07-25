@@ -52,17 +52,21 @@ export class PizzaDatabase extends BaseDatabase implements IPizzaDatabase {
 		throw new Error(error.sqlMessage || error.message)
 	      }
 	}
-	async getPriceByItem(pizzaId:string):Promise<number>{
+	async getPriceByOrder(orderId:string):Promise<number>{
 		try {
 		
 		
 		const result=await this.getConnection()
 		.from(PizzaDatabase.TABLE_NAME)
 		.join('Item',"Pizza_Case.id","=",'Item.pizza_id')
+		
 		.select('price')
 		
+		
+		
 		const {price}=result[0]
-	
+			
+			
 		
 		return price
 		} catch (error: any) {

@@ -7,7 +7,7 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 	private static TABLE_NAME = 'Item'
 	async create(item: item): Promise<void> {
 	    try {
-		console.log(item.status);
+		
 		
 		
 		await this.getConnection()
@@ -22,27 +22,31 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		throw new Error(error.sqlMessage || error.message)
 	      }
 	}
-	async getQuantity(itemId: string): Promise<void> {
+	async getQuantity(orderId: string): Promise<number> {
 	    try {
+		
+		
 		const result = await this.getConnection()
 		.select("quantity")
 		.from(ItemDatabase.TABLE_NAME)
-		.where('id',itemId)
+		.where('Item.order_id',"=",`${orderId}`)
 		
 		const {quantity}=result[0]
 		return quantity
+		
 	    } catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
 	      }
 	}
-	async getPizzaIdByItem(itemId:string):Promise<string>{
+	async getPizzaIdByOrder(orderId:string):Promise<string>{
 		try {
 		const pizzaId=await this.getConnection()
 		.select("pizza_id")
 		.from(ItemDatabase.TABLE_NAME)
-		.where("id",itemId)
+		.where("order_id",orderId)
 		const {pizza_id}=pizzaId[0]
 	
+		
 		
 		return pizza_id
 		} catch (error: any) {
@@ -73,7 +77,7 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 	async getActives(): Promise<any> {
 	    try {
 		const result =await this.getConnection()
-		.raw(`SELECT i.id,p.name,p.price,p.img_url,p.ingredients,i.quantity FROM Pizza_Case as p INNER JOIN Item i ON i.pizza_id=p.id WHERE i.status='ACTIVE'`)
+		.raw(`SELECT i.id,p.name,p.price,p.img_url,p.ingredients,i.quantity,i.order_id FROM Pizza_Case as p INNER JOIN Item i ON i.pizza_id=p.id WHERE i.status='ACTIVE'`)
 		return result[0]
 	    } catch(error:any){
 		throw new Error(error.sqlMessage || error.message)
@@ -94,7 +98,7 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 	async getIdActive(): Promise<any> {
 	    try {
 		const result=await this.getConnection()
-		.select('id')
+		.select('Item.id')
 		.from(ItemDatabase.TABLE_NAME)
 		.where("status",'INACTIVE')
 		
@@ -104,4 +108,5 @@ export class ItemDatabase extends BaseDatabase implements IItemDatabase{
 		throw new Error(error.sqlMessage || error.message)
 	    }
 	}
+	
 }

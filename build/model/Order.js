@@ -2,10 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Order = void 0;
 class Order {
-    constructor(id, userId, itemId, total, createdAt) {
+    constructor(id, userId, total, createdAt) {
         this.id = id;
         this.userId = userId;
-        this.itemId = itemId;
         this.total = total;
         this.createdAt = createdAt;
     }
@@ -14,9 +13,6 @@ class Order {
     }
     getUserId() {
         return this.userId;
-    }
-    getItemId() {
-        return this.itemId;
     }
     getTotal() {
         return this.total;
@@ -30,9 +26,6 @@ class Order {
     setUserId(userId) {
         this.userId = userId;
     }
-    setItemId(itemId) {
-        this.itemId = itemId;
-    }
     setTotal(total) {
         this.total = total;
     }
@@ -40,7 +33,7 @@ class Order {
         this.createdAt = createdAt;
     }
     static toOrderModel(order) {
-        return new Order(order.id, order.userId, order.itemId, order.total, order.createdAt);
+        return new Order(order.id, order.userId, order.total, order.createdAt);
     }
 }
 exports.Order = Order;

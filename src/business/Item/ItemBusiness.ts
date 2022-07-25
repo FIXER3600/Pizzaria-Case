@@ -17,7 +17,7 @@ export class ItemBusiness implements ItemRepository{
 		if (!token) {
 			throw new CustomError(401,"Por favor, passe o token no header da requisição");
 		}
-		const {pizzaId,quantity}=input
+		let {pizzaId,quantity}=input
 	if ( !pizzaId || !quantity) {
 			throw new CustomError(401,"Faltam parâmetros na requisição para a criação de item");
 		}
@@ -26,12 +26,21 @@ export class ItemBusiness implements ItemRepository{
 		if (!pizza) {
 			throw new CustomError(404,"Id da pizza inválido ou Pizza não encontrada");
 		}
-		const idActive= await this.itemDatabase.getIdActive()
-		const order_id=this.idGenerator.generate()
+		
+		
 		const status=Status.ACTIVE
 			
 		
 		const id=this.idGenerator.generate()
+		
+		
+		let order_id=await this.itemDatabase.getOrderId()
+		
+		if (!order_id) {
+		order_id=this.idGenerator.generate()
+		
+		}
+
 		const item:item={
 			id,
 			pizzaId,

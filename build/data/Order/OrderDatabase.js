@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderDatabase = void 0;
 const BaseDatabase_1 = require("../BaseDatabase");
 class OrderDatabase extends BaseDatabase_1.BaseDatabase {
-    create(order) {
+    create(order, itemId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.getConnection()
@@ -21,12 +21,11 @@ class OrderDatabase extends BaseDatabase_1.BaseDatabase {
                     user_id: order.userId,
                     total: order.total,
                     createdAt: order.createdAt,
-                    item_id: order.itemId
                 }).into(OrderDatabase.TABLE_NAME);
                 yield this.getConnection()
                     .from('Item')
-                    .where('id', order.itemId)
-                    .update('status', 'INACTIVE');
+                    .where('id', itemId)
+                    .update({ status: 'INACTIVE' });
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);
@@ -54,6 +53,23 @@ class OrderDatabase extends BaseDatabase_1.BaseDatabase {
                     .from(OrderDatabase.TABLE_NAME)
                     .where({ id });
                 return result[0];
+            }
+            catch (error) {
+                throw new Error(error.sqlMessage || error.message);
+            }
+        });
+    }
+    getItemIdByOrder(orderId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .select('id')
+                    .from("Item")
+                    .where("Item.order_id", `${orderId}`);
+                const { id } = result[0];
+                console.log(result[0]);
+                console.log(id);
+                return id;
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);

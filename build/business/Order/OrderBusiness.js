@@ -24,25 +24,26 @@ class OrderBusiness {
                 if (!token) {
                     throw new CustomError_1.CustomError(401, "Por favor, passe o token no header da requisição");
                 }
-                const { itemId } = input;
-                if (!itemId) {
+                const { orderId } = input;
+                if (!orderId) {
                     throw new CustomError_1.CustomError(400, "Por favor, é necessário que se tenha o item para criar um pedido");
                 }
                 const userId = this.authenticator.getData(token);
-                const pizzaId = yield this.itemDatabase.getPizzaIdByItem(itemId);
-                const price = yield this.pizzaDatabase.getPriceByItem(pizzaId);
-                const quantity = yield this.itemDatabase.getQuantity(itemId);
+                const pizzaId = yield this.itemDatabase.getPizzaIdByOrder(orderId);
+                const price = yield this.pizzaDatabase.getPriceByOrder(pizzaId);
+                const itemId = yield this.orderDatabase.getItemIdByOrder(orderId);
+                const quantity = yield this.itemDatabase.getQuantity(orderId);
                 const id = yield this.itemDatabase.getOrderId();
                 const { order_id } = id;
+                console.log(itemId);
                 const createdAt = new Date();
                 const order = {
-                    id: order_id,
+                    id: orderId,
                     userId: userId.id,
-                    itemId,
                     total: Number(price) * Number(quantity),
                     createdAt
                 };
-                yield this.orderDatabase.create(order);
+                yield this.orderDatabase.create(order, itemId);
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);

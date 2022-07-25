@@ -24,7 +24,7 @@ class ItemBusiness {
                 if (!token) {
                     throw new CustomError_1.CustomError(401, "Por favor, passe o token no header da requisição");
                 }
-                const { pizzaId, quantity } = input;
+                let { pizzaId, quantity } = input;
                 if (!pizzaId || !quantity) {
                     throw new CustomError_1.CustomError(401, "Faltam parâmetros na requisição para a criação de item");
                 }
@@ -32,10 +32,17 @@ class ItemBusiness {
                 if (!pizza) {
                     throw new CustomError_1.CustomError(404, "Id da pizza inválido ou Pizza não encontrada");
                 }
-                const idActive = yield this.itemDatabase.getIdActive();
-                const order_id = this.idGenerator.generate();
                 const status = Item_1.Status.ACTIVE;
                 const id = this.idGenerator.generate();
+                if (pizza) {
+                    const quantityBase = yield this.itemDatabase.getQuantity(id);
+                    quantity += quantityBase;
+                }
+                let order_id = yield this.itemDatabase.getOrderId();
+                if (!order_id) {
+                    order_id = this.idGenerator.generate();
+                    return order_id;
+                }
                 const item = {
                     id,
                     pizzaId,

@@ -26,9 +26,9 @@ class OrderController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const auth = req.headers.authorization;
-                const { itemId } = req.body;
+                const { orderId } = req.body;
                 const input = {
-                    itemId
+                    orderId
                 };
                 const orderBusiness = new OrderBusiness_1.OrderBusiness(orderDatabase, pizzaDatabase, itemDatabase, authenticator);
                 yield orderBusiness.create(input, auth);

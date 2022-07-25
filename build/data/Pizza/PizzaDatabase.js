@@ -70,7 +70,7 @@ class PizzaDatabase extends BaseDatabase_1.BaseDatabase {
             }
         });
     }
-    getPriceByItem(pizzaId) {
+    getPriceByOrder(orderId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield this.getConnection()
@@ -78,6 +78,7 @@ class PizzaDatabase extends BaseDatabase_1.BaseDatabase {
                     .join('Item', "Pizza_Case.id", "=", 'Item.pizza_id')
                     .select('price');
                 const { price } = result[0];
+                console.log(price);
                 return price;
             }
             catch (error) {

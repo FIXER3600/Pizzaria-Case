@@ -33,21 +33,21 @@ Content-Type: application/json
 
 ###
 POST http://localhost:3003/item/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1Nzk1MTU0NiwiZXhwIjoxNjU3OTU1MTQ2fQ.OUT6fWKdFUX-8yyowrKMp0cFCw8x1E-5C4p1mAqjEaM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODcxNjQ1MywiZXhwIjoxNjU4NzIwMDUzfQ.pqBc43pPG8O8Don75lxmLn49iI58dz_vygp5EfKPX7I
 Content-Type: application/json
 
 {
-	"pizzaId":"ba6a43ac-5938-4d62-94e8-30fe35005d1e",
+	"pizzaId":"95f57823-1fb8-48e8-aa8c-339a2d5a26aa",
 	"quantity":2
 }
 
 ###
 POST http://localhost:3003/order/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODYxMjI3NSwiZXhwIjoxNjU4NjE1ODc1fQ.3YOYWfWRsINbX9e_1fFt4VY6uJVXwX-jN9cjUBPvIzQ
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODcxNjQ1MywiZXhwIjoxNjU4NzIwMDUzfQ.pqBc43pPG8O8Don75lxmLn49iI58dz_vygp5EfKPX7I
 Content-Type: application/json
 
 {
-	"itemId":"0d92c0a6-76ca-493d-ac2c-dc597796185f"
+	"orderId":"da3c5688-9027-426e-9919-944be474fe31"
 	
 }
 
@@ -65,8 +65,12 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAt
 
 ###
 GET http://localhost:3003/item/cart
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODYzMjkwMiwiZXhwIjoxNjU4NjM2NTAyfQ.dKy8uUICQKyzPFDXokpvikYxJ3sGi1UaJ0YuodsLUrc
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODY4MjY4MiwiZXhwIjoxNjU4Njg2MjgyfQ.hcvUvYTimEpGENDD533gX1sVlqdx4BtOe7DG7lNmG4o
 
 ###
 DELETE http://localhost:3003/item/delete/
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODYzMjkwMiwiZXhwIjoxNjU4NjM2NTAyfQ.dKy8uUICQKyzPFDXokpvikYxJ3sGi1UaJ0YuodsLUrc
+
+###
+GET http://localhost:3003/order/details/da3c5688-9027-426e-9919-944be474fe31
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlYjYyYjI5LTAwNTAtNGFmYy1hMjFlLTUwNmVhZDgxMGQyNyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1ODcyNTA5MCwiZXhwIjoxNjU4NzI4NjkwfQ.GvmNcUeauoEbipcC1psA7p877cjkVL_UrtSK2y93lb8

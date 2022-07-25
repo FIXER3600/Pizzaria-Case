@@ -16,7 +16,6 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
     create(item) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(item.status);
                 yield this.getConnection()
                     .insert({
                     id: item.id,
@@ -31,13 +30,13 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
             }
         });
     }
-    getQuantity(itemId) {
+    getQuantity(orderId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield this.getConnection()
                     .select("quantity")
                     .from(ItemDatabase.TABLE_NAME)
-                    .where('id', itemId);
+                    .where('Item.order_id', "=", `${orderId}`);
                 const { quantity } = result[0];
                 return quantity;
             }
@@ -46,13 +45,13 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
             }
         });
     }
-    getPizzaIdByItem(itemId) {
+    getPizzaIdByOrder(orderId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const pizzaId = yield this.getConnection()
                     .select("pizza_id")
                     .from(ItemDatabase.TABLE_NAME)
-                    .where("id", itemId);
+                    .where("order_id", orderId);
                 const { pizza_id } = pizzaId[0];
                 return pizza_id;
             }
@@ -92,10 +91,7 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield this.getConnection()
-                    .from(ItemDatabase.TABLE_NAME)
-                    .join('Pizza_Case', 'Pizza_Case.id', '=', 'Item.pizza_id')
-                    .where('status', 'ACTIVE')
-                    .select('Item.id', 'Pizza_Case.name', "Pizza_Case.price", "Pizza_Case.ingredients", 'Pizza_Case.quantity', 'Pizza_Case.img_url');
+                    .raw(`SELECT i.id,p.name,p.price,p.img_url,p.ingredients,i.quantity,i.order_id FROM Pizza_Case as p INNER JOIN Item i ON i.pizza_id=p.id WHERE i.status='ACTIVE'`);
                 return result[0];
             }
             catch (error) {
@@ -121,7 +117,7 @@ class ItemDatabase extends BaseDatabase_1.BaseDatabase {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield this.getConnection()
-                    .select('id')
+                    .select('Item.id')
                     .from(ItemDatabase.TABLE_NAME)
                     .where("status", 'INACTIVE');
                 return result;

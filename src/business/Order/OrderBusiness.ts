@@ -20,30 +20,34 @@ export class OrderBusiness implements OrderRepository{
 			if (!token) {
 				throw new CustomError(401,"Por favor, passe o token no header da requisição");
 			}
-			const {itemId}=input
-			if(!itemId){
+			const {orderId}=input
+			if(!orderId){
 				throw new CustomError(400,"Por favor, é necessário que se tenha o item para criar um pedido");
 			}
 			
+			
 			const userId=this.authenticator.getData(token)
-			const pizzaId= await this.itemDatabase.getPizzaIdByItem(itemId)
-			const price= await this.pizzaDatabase.getPriceByItem(pizzaId)	
-			const quantity=await this.itemDatabase.getQuantity(itemId)
+			const pizzaId= await this.itemDatabase.getPizzaIdByOrder(orderId)
+			const price= await this.pizzaDatabase.getPriceByOrder(pizzaId)	
+			const itemId=await this.orderDatabase.getItemIdByOrder(orderId)
+			const quantity=await this.itemDatabase.getQuantity(orderId)
 			const id=await this.itemDatabase.getOrderId()
 			
 			const{order_id}=id
+
+			console.log(itemId);
+			
 			
 			
 			const createdAt=new Date()
 			const order:order={
-				id:order_id,
+				id:orderId,
 				userId:userId.id,
-				itemId,
 				total:Number(price) * Number(quantity),
 				createdAt
 			}
 			
-			await this.orderDatabase.create(order)
+			await this.orderDatabase.create(order,itemId)
 		}catch (error: any) {
 			throw new Error(error.sqlMessage || error.message)
 		      }
@@ -73,6 +77,23 @@ export class OrderBusiness implements OrderRepository{
 			
 		}
 		return order
+	    } catch (error: any) {
+		throw new Error(error.sqlMessage || error.message)
+	      }
+	}
+	async getDetails(id: string, token: string): Promise<any> {
+	    try {
+		if (!token) {
+			throw new CustomError(401,"Por favor, passe o token no header da requisição");
+		}
+		
+		
+		const details=await this.orderDatabase.getDetails(id)
+		
+		if (!details) {
+			throw new CustomError(404,"Detalhes não encontrados");
+		}
+		return details
 	    } catch (error: any) {
 		throw new Error(error.sqlMessage || error.message)
 	      }

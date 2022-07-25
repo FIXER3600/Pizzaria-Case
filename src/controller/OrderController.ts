@@ -15,9 +15,9 @@ export class OrderController{
 	async create(req:Request,res:Response){
 		try {
 			const auth=req.headers.authorization!
-			const {itemId}=req.body
+			const {orderId}=req.body
 			const input:OrderInputDTO={
-				itemId
+				orderId
 			}
 			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator)
 			await orderBusiness.create(input,auth)
@@ -43,6 +43,17 @@ export class OrderController{
 			const auth=req.headers.authorization!
 			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator)
 			const result=await orderBusiness.getAll(auth)
+			res.status(200).send(result)
+		} catch (error:any) {
+			res.status(400).send({ error: error.message });
+		    }
+	}
+	async getOrderDetails(req:Request,res:Response){
+		try {
+			const auth=req.headers.authorization!
+			const {id}=req.params
+			const orderBusiness=new OrderBusiness(orderDatabase,pizzaDatabase,itemDatabase,authenticator)
+			const result=await orderBusiness.getDetails(id,auth)
 			res.status(200).send(result)
 		} catch (error:any) {
 			res.status(400).send({ error: error.message });
