@@ -26,11 +26,10 @@ export class OrderDatabase extends BaseDatabase implements IOrderDatabase{
 	async getAll(): Promise<[] | Order[]> {
 		try {
 			const result= await this.getConnection()
-			.raw(`SELECT o.total, o.createdAt, u.name, p.img_url,p.price,i.quantity 
+			.raw(`SELECT o.total, o.createdAt, u.name as nameUser, p.img_url,p.price,p.name,i.quantity 
 			FROM Order_CASE_PIZZA o INNER JOIN User_CASE_PIZZA u ON o.user_id=u.id 
 			INNER JOIN Item i ON i.order_id=o.id 
-			INNER JOIN Pizza_Case p ON i.pizza_id = p.id
-			`)
+			INNER JOIN Pizza_Case p ON i.pizza_id = p.id`)
 
 			return result[0]
 		} catch (error: any) {

@@ -36,9 +36,12 @@ class OrderDatabase extends BaseDatabase_1.BaseDatabase {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield this.getConnection()
-                    .select('*')
-                    .from(OrderDatabase.TABLE_NAME);
-                return result;
+                    .raw(`SELECT o.total, o.createdAt, u.name, p.img_url,p.price,i.quantity 
+			FROM Order_CASE_PIZZA o INNER JOIN User_CASE_PIZZA u ON o.user_id=u.id 
+			INNER JOIN Item i ON i.order_id=o.id 
+			INNER JOIN Pizza_Case p ON i.pizza_id = p.id
+			`);
+                return result[0];
             }
             catch (error) {
                 throw new Error(error.sqlMessage || error.message);
